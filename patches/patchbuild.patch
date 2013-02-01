@@ -1,0 +1,129 @@
+diff --git a/frameworks/base/core/java/android/view/KeyEvent.java b/frameworks/base/core/java/android/view/KeyEvent.java
+index 8c43c22..255d11b 100755
+--- a/frameworks/base/core/java/android/view/KeyEvent.java
++++ b/frameworks/base/core/java/android/view/KeyEvent.java
+@@ -639,7 +639,12 @@ public class KeyEvent extends InputEvent implements Parcelable {
+     /** @hide */
+     public static final int KEYCODE_SCREENSHOT      = 226;
+ 
+-    private static final int LAST_KEYCODE           = KEYCODE_SCREENSHOT;
++    //TPT START
++    public static final int KEYCODE_AUTO_ROTATION   = 227;
++    public static final int KEYCODE_TOUCH_DISABLER  = 228;
++ 
++    private static final int LAST_KEYCODE           = KEYCODE_TOUCH_DISABLER;
++    //TPT END
+ 
+     // NOTE: If you add a new keycode here you must also add it to:
+     //  isSystem()
+@@ -888,6 +893,10 @@ public class KeyEvent extends InputEvent implements Parcelable {
+         names.append(KEYCODE_BRIGHTNESS_UP, "KEYCODE_BRIGHTNESS_UP");
+         names.append(KEYCODE_BRIGHTNESS_AUTO, "KEYCODE_BRIGHTNESS_AUTO");
+         names.append(KEYCODE_SCREENSHOT, "KEYCODE_SCREENSHOT");
++	//TPT start
++        names.append(KEYCODE_AUTO_ROTATION, "KEYCODE_AUTO_ROTATION");
++        names.append(KEYCODE_TOUCH_DISABLER, "KEYCODE_TOUCH_DISABLER");
++	//TPT end
+     };
+ 
+     // Symbolic names of all metakeys in bit order from least significant to most significant.
+diff --git a/frameworks/base/core/res/res/values/attrs.xml b/frameworks/base/core/res/res/values/attrs.xml
+index 0c69314..5d8aab0 100755
+--- a/frameworks/base/core/res/res/values/attrs.xml
++++ b/frameworks/base/core/res/res/values/attrs.xml
+@@ -1537,6 +1537,10 @@
+         <enum name="KEYCODE_BRIGHTNESS_UP" value="224" />
+         <enum name="KEYCODE_BRIGHTNESS_AUTO" value="225" />
+         <enum name="KEYCODE_SCREENSHOT" value="226" />
++	<!--TPT start-->
++	<enum name="KEYCODE_AUTO_ROTATION" value="227" />
++	<enum name="KEYCODE_TOUCH_DISABLER" value="228" />
++	<!--TPT end-->
+     </attr>
+ 
+     <!-- ***************************************************************** -->
+diff --git a/frameworks/base/include/androidfw/KeycodeLabels.h b/frameworks/base/include/androidfw/KeycodeLabels.h
+index 8bd6f5f..b85df4f 100755
+--- a/frameworks/base/include/androidfw/KeycodeLabels.h
++++ b/frameworks/base/include/androidfw/KeycodeLabels.h
+@@ -251,6 +251,10 @@ static const KeycodeLabel KEYCODES[] = {
+     { "BRIGHTNESS_UP", 224 },
+     { "BRIGHTNESS_AUTO", 225 },
+     { "SCREENSHOT", 226 },
++    //TPT start
++    { "AUTO_ROTATION", 227},
++    { "TOUCH_DISABLER", 228},
++    //TPT end
+ 
+     // NOTE: If you add a new keycode here you must also add it to several other files.
+     //       Refer to frameworks/base/core/java/android/view/KeyEvent.java for the full list.
+diff --git a/frameworks/base/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java b/frameworks/base/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
+index 26dec41..c3c0215 100644
+--- a/frameworks/base/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
++++ b/frameworks/base/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
+@@ -2100,6 +2100,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+             WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
+         };
+ 
++  //TPT
++    void showToast(final String i) {
++        mHandler.post(new Runnable() {
++            @Override
++            public void run() {
++            CharSequence text = "Error";
++
++            text = i;
++
++            int duration = Toast.LENGTH_SHORT;
++
++            Toast toast = Toast.makeText(mContext, text, duration);
++            toast.show();
++            }
++        });
++    }
++  //TPT END
++
+     /** {@inheritDoc} */
+     @Override
+     public long interceptKeyBeforeDispatching(WindowState win, KeyEvent event, int policyFlags) {
+@@ -2383,7 +2401,39 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                     mHandler.postDelayed(mBackLongPress, mBackKillTimeout);
+                 }
+             }
+-        }
++	} else if (keyCode == KeyEvent.KEYCODE_AUTO_ROTATION && down) { //TPT start
++            int ret = Settings.System.getInt(mContext.getContentResolver(), 
++                Settings.System.ACCELEROMETER_ROTATION, 0);
++
++            try {
++                if(ret == 0){
++                    mWindowManager.thawRotation();
++                    showToast("Auto Rotation Enabled");
++                } else {
++                    mWindowManager.freezeRotation(-1);
++                    showToast("Auto Rotation Disabled");
++                }
++            } catch (RemoteException exc) {
++                showToast("Auto Rotation Toggle Error");
++                Log.w(TAG, "Unable to save auto-rotate setting");
++            }
++        } else if (keyCode == KeyEvent.KEYCODE_TOUCH_DISABLER && down) {
++            if(SystemProperties.getInt("touch.enable", 1) == 1) {
++                try {
++                    Runtime.getRuntime().exec("tpt-touch-enabler 0");
++                } catch(Exception d) {
++                    Log.w(TAG, "Unable to disable Touch: "+d.getMessage());
++                }
++                showToast("Touchscreen Disabled");
++            } else {
++                try {
++                    Runtime.getRuntime().exec("tpt-touch-enabler 1");
++                } catch(Exception d) {
++                    Log.w(TAG, "Unable to enable Touch: "+d.getMessage());
++                }
++                showToast("Touchscreen Enabled");
++            }
++        }//TPT End
+ 
+         // Shortcuts are invoked through Search+key, so intercept those here
+         // Any printing key that is chorded with Search should be consumed
