@@ -58,6 +58,7 @@ on fs
 # Compal mini 20110524 end
 
 on post-fs-data
+
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
@@ -237,7 +238,7 @@ on boot
 # compal Indigo-Jason 20120322 for CTS android.permission.cts.FileSystemPermissionTest End
 
 service wpa_supplicant /system/bin/wpa_supplicant \
-     -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
+     -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
 
 #   we will start as root and wpa_supplicant will switch to user wifi
 #   after setting up the capabilities required for WEXT
