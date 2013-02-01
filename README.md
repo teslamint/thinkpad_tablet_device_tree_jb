@@ -12,13 +12,15 @@ follow this tutorial for information how to setup environment
 http://wiki.cyanogenmod.org/w/Build_for_crespo
 
 Some moments are differ here:
-1) JB 4.1
+1) JB 4.1. 
+====================================
 instead of
-    repo init -u git://github.com/CyanogenMod/android.git -b cm-10.1
+*    repo init -u git://github.com/CyanogenMod/android.git -b cm-10.1
 or somewhat branch they will prefer you should use this:
-    repo init -u git://github.com/CyanogenMod/android.git -b jellybean
+*    repo init -u git://github.com/CyanogenMod/android.git -b jellybean
 so you could build JB 4.1 instead of 4.2
-2) tree sync
+*2) tree sync
+====================================
 before repo sync do:
 Create a file ``local_manifest.xml`` in ``~/android/system (or whatever folder you will use to store build)/.repo``, with the following content::
 
@@ -28,6 +30,7 @@ Create a file ``local_manifest.xml`` in ``~/android/system (or whatever folder y
         <project path="kernel/LENOVO/Indigo" name="Nikolas-LFDesigns/thinkpad_tablet_jb_kernel" revision="master" />
     </manifest>
 for original Koshu tree use this:
+====================================
 //////////////////////////////////////////////////////////////////////////////////Start of original Koshu build changes
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
@@ -49,14 +52,16 @@ If you only want to build CM10 for the Thinkpad Tablet, you can also remove the 
   <project path="device/samsung/tuna" name="CyanogenMod/android_device_samsung_tuna" />
 
 3) applying patch
+====================================
 After source code synced, apply framework patch to enable some device-specific features
 command sequence would be:
-	croot
-	patch -p0 <device/LENOVO/patches/patchbuild.patch
+*	croot
+*	patch -p0 <device/LENOVO/patches/patchbuild.patch
 4) build brunch
-    For wifi-only:		brunch cm_Indigo-userdebug
-    For 3G-Ericsson:		brunch cm_IndigoF-userdebug
-    For 3G-gobi:		brunch cm_IndigoG-userdebug
+====================================
+*    For wifi-only:		brunch cm_Indigo-userdebug
+*    For 3G-Ericsson:		brunch cm_IndigoF-userdebug
+*    For 3G-gobi:		brunch cm_IndigoG-userdebug
 subsequently use instead of
-	breakfast crespo
-	brunch crespo
+*	breakfast crespo
+*	brunch crespo
