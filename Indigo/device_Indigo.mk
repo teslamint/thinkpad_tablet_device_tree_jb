@@ -17,9 +17,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072 \
     touch.enable=1
 
-# Set default USB interface
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp,adb
+PRODUCT_PACKAGES += \
+    com.android.future.usb.accessory \
+
 
 include frameworks/native/build/tablet-dalvik-heap.mk
 

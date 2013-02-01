@@ -3,3 +3,4 @@
 #
 
 3g.module = none
+persist.sys.usb.config = mtp,adb
