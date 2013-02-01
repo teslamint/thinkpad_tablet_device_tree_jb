@@ -63,6 +63,7 @@ on init
 on fs
     mount ext4 /dev/block/mmcblk0p3 /system wait ro
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
+    setprop ro.crypto.umount_sd false
     mount ext4 /dev/block/mmcblk0p10 /data wait noatime nosuid nodev journal_async_commit,data=writeback,nodelalloc,errors=panic
     mount ext4 /dev/block/mmcblk0p4 /cache wait noatime nosuid nodev journal_async_commit,data=writeback,nodelalloc,errors=panic
 
@@ -72,6 +73,8 @@ on fs
     chmod 775 /mnt/pia
     mount ext4 /dev/block/mmcblk0p9 /mnt/persdata wait noatime nosuid nodev journal_async_commit,data=writeback,nodelalloc,errors=panic
 # Compal Earvin 20110823 end
+
+setprop ro.crypto.fuse_sdcard true
 
 # Compal mini 20110524 begin
 # FactoryReset
