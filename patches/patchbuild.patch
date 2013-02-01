@@ -1,25 +1,25 @@
 diff --git a/frameworks/base/core/java/android/view/KeyEvent.java b/frameworks/base/core/java/android/view/KeyEvent.java
-index 8c43c22..255d11b 100755
+index c2a3e58..ee2f239 100755
 --- a/frameworks/base/core/java/android/view/KeyEvent.java
 +++ b/frameworks/base/core/java/android/view/KeyEvent.java
-@@ -639,7 +639,12 @@ public class KeyEvent extends InputEvent implements Parcelable {
-     /** @hide */
-     public static final int KEYCODE_SCREENSHOT      = 226;
+@@ -624,7 +624,12 @@ public class KeyEvent extends InputEvent implements Parcelable {
+      * Launches the global assist activity.  Not delivered to applications. */
+     public static final int KEYCODE_ASSIST          = 219;
  
--    private static final int LAST_KEYCODE           = KEYCODE_SCREENSHOT;
+-    private static final int LAST_KEYCODE           = KEYCODE_ASSIST;
 +    //TPT START
-+    public static final int KEYCODE_AUTO_ROTATION   = 227;
-+    public static final int KEYCODE_TOUCH_DISABLER  = 228;
++    public static final int KEYCODE_AUTO_ROTATION   = 220;
++    public static final int KEYCODE_TOUCH_DISABLER  = 221;
 + 
 +    private static final int LAST_KEYCODE           = KEYCODE_TOUCH_DISABLER;
 +    //TPT END
  
      // NOTE: If you add a new keycode here you must also add it to:
      //  isSystem()
-@@ -888,6 +893,10 @@ public class KeyEvent extends InputEvent implements Parcelable {
-         names.append(KEYCODE_BRIGHTNESS_UP, "KEYCODE_BRIGHTNESS_UP");
-         names.append(KEYCODE_BRIGHTNESS_AUTO, "KEYCODE_BRIGHTNESS_AUTO");
-         names.append(KEYCODE_SCREENSHOT, "KEYCODE_SCREENSHOT");
+@@ -866,6 +871,10 @@ public class KeyEvent extends InputEvent implements Parcelable {
+         names.append(KEYCODE_RO, "KEYCODE_RO");
+         names.append(KEYCODE_KANA, "KEYCODE_KANA");
+         names.append(KEYCODE_ASSIST, "KEYCODE_ASSIST");
 +	//TPT start
 +        names.append(KEYCODE_AUTO_ROTATION, "KEYCODE_AUTO_ROTATION");
 +        names.append(KEYCODE_TOUCH_DISABLER, "KEYCODE_TOUCH_DISABLER");
@@ -28,40 +28,40 @@ index 8c43c22..255d11b 100755
  
      // Symbolic names of all metakeys in bit order from least significant to most significant.
 diff --git a/frameworks/base/core/res/res/values/attrs.xml b/frameworks/base/core/res/res/values/attrs.xml
-index 0c69314..5d8aab0 100755
+index 447daab..1487984 100755
 --- a/frameworks/base/core/res/res/values/attrs.xml
 +++ b/frameworks/base/core/res/res/values/attrs.xml
-@@ -1537,6 +1537,10 @@
-         <enum name="KEYCODE_BRIGHTNESS_UP" value="224" />
-         <enum name="KEYCODE_BRIGHTNESS_AUTO" value="225" />
-         <enum name="KEYCODE_SCREENSHOT" value="226" />
+@@ -1541,6 +1541,10 @@
+         <enum name="KEYCODE_YEN" value="216" />
+         <enum name="KEYCODE_RO" value="217" />
+         <enum name="KEYCODE_KANA" value="218" />
 +	<!--TPT start-->
-+	<enum name="KEYCODE_AUTO_ROTATION" value="227" />
-+	<enum name="KEYCODE_TOUCH_DISABLER" value="228" />
++	<enum name="KEYCODE_AUTO_ROTATION" value="219" />
++	<enum name="KEYCODE_TOUCH_DISABLER" value="220" />
 +	<!--TPT end-->
      </attr>
  
      <!-- ***************************************************************** -->
 diff --git a/frameworks/base/include/androidfw/KeycodeLabels.h b/frameworks/base/include/androidfw/KeycodeLabels.h
-index 8bd6f5f..b85df4f 100755
+index 538949d..95b2f3a 100755
 --- a/frameworks/base/include/androidfw/KeycodeLabels.h
 +++ b/frameworks/base/include/androidfw/KeycodeLabels.h
-@@ -251,6 +251,10 @@ static const KeycodeLabel KEYCODES[] = {
-     { "BRIGHTNESS_UP", 224 },
-     { "BRIGHTNESS_AUTO", 225 },
-     { "SCREENSHOT", 226 },
+@@ -244,6 +244,10 @@ static const KeycodeLabel KEYCODES[] = {
+     { "RO", 217 },
+     { "KANA", 218 },
+     { "ASSIST", 219 },
 +    //TPT start
-+    { "AUTO_ROTATION", 227},
-+    { "TOUCH_DISABLER", 228},
++    { "AUTO_ROTATION", 220},
++    { "TOUCH_DISABLER", 221},
 +    //TPT end
  
      // NOTE: If you add a new keycode here you must also add it to several other files.
      //       Refer to frameworks/base/core/java/android/view/KeyEvent.java for the full list.
 diff --git a/frameworks/base/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java b/frameworks/base/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
-index 26dec41..c3c0215 100644
+index 6ea2077..c6028f3 100755
 --- a/frameworks/base/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
 +++ b/frameworks/base/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
-@@ -2100,6 +2100,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -2140,6 +2140,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
              WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
          };
  
@@ -86,12 +86,12 @@ index 26dec41..c3c0215 100644
      /** {@inheritDoc} */
      @Override
      public long interceptKeyBeforeDispatching(WindowState win, KeyEvent event, int policyFlags) {
-@@ -2383,7 +2401,39 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -2421,7 +2439,39 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                      mHandler.postDelayed(mBackLongPress, mBackKillTimeout);
                  }
              }
 -        }
-+	} else if (keyCode == KeyEvent.KEYCODE_AUTO_ROTATION && down) { //TPT start
++        } else if (keyCode == KeyEvent.KEYCODE_AUTO_ROTATION && down) { //TPT start
 +            int ret = Settings.System.getInt(mContext.getContentResolver(), 
 +                Settings.System.ACCELEROMETER_ROTATION, 0);
 +
