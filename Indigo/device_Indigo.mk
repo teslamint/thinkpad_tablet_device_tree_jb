@@ -2,9 +2,6 @@ $(call inherit-product, device/LENOVO/Indigo/proprietary/copy.mk)
 $(call inherit-product, device/LENOVO/Indigo/configfiles/copy.mk)
 $(call inherit-product, device/LENOVO/Indigo/ramdisk/copy.mk)
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    3g.module = none
-
 ifeq ($(TARGET_PREBUILT_KERNEL),)
     LOCAL_KERNEL := $(LOCAL_PATH)/kernel
 else
