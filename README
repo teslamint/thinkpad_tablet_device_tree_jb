@@ -17,20 +17,20 @@ before repo sync do:
 Create a file "local_manifest.xml" in "~/android/system (or whatever folder you will use to store build)/.repo", with the following content:
     <?xml version="1.0" encoding="UTF-8"?>
     <manifest>
-        <project path="device/LENOVO" name="Nikolas-LFDesigns/thinkpad_tablet_device_tree_jb" revision="master" />
-        <project path="kernel/LENOVO/Indigo" name="Nikolas-LFDesigns/thinkpad_tablet_jb_kernel" revision="master" />
+        <project path="device/LENOVO" name="Nikolas-LFDesigns/thinkpad_tablet_device_tree_jb" revision="cm-10.1" />
+        <project path="kernel/LENOVO/Indigo" name="Nikolas-LFDesigns/thinkpad_tablet_jb_kernel" revision="cm-10.1" />
     </manifest>
 
 for original Koshu tree use this:
 //////////////////////////////////////////////////////////////////////////////////Start of original Koshu build changes///
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-    <project path="frameworks/base" name="Koshu/android_frameworks_base" revision="jb" />
+    <project path="frameworks/base" name="Koshu/android_frameworks_base" revision="jellybean" />
     <project path="device/LENOVO" name="Koshu/thinkpad_tablet_device_tree_jb" revision="master" />
     <project path="kernel/LENOVO/Indigo" name="Koshu/thinkpad_tablet_jb_kernel" revision="master" />
 </manifest>
 
-also edit the file manifest.xml in ~/cm9_tpt/.repo and remove the following line
+also edit the file manifest.xml in ~/android/system(or whatever)/.repo and remove the following line
 <project path="frameworks/base" name="CyanogenMod/android_frameworks_base" /
 //////////////////////////////////////////////////////////////////////////////////End of original Koshu build changes///
 
