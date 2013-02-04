@@ -20,7 +20,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
 
-
 include frameworks/native/build/tablet-dalvik-heap.mk
 
 # These are the hardware-specific features
@@ -44,6 +43,9 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.xml:system/etc/permissions/android.hardware.touchscreen.xml \
     frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
+
+PRODUCT_COPY_FILES += \
+ $(LOCAL_PATH)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
 PRODUCT_PACKAGES := \
     make_ext4fs \
