@@ -88,7 +88,6 @@ lib/hw/camera.tegra.so
 lib/hw/audio_policy.tegra.so
 lib/hw/audio.primary.tegra.so
 lib/hw/audio.a2dp.default.so
-lib/modules/scsi_wait_scan.ko
 lib/libarcsoft_demux.so
 lib/libarcsoft_source.so
 lib/libardrv_dynamic.so

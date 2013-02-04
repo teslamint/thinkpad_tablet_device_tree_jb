@@ -1,7 +1,5 @@
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/bin/modelid_cfg.sh:system/bin/modelid_cfg.sh \
-    $(LOCAL_PATH)/lib/modules/bcm4329.ko:system/lib/modules/bcm4329.ko \
-    $(LOCAL_PATH)/lib/modules/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
     $(LOCAL_PATH)/etc/asound.conf:system/etc/asound.conf \
     $(LOCAL_PATH)/etc/audio_policy.conf:system/etc/audio_policy.conf \
     $(LOCAL_PATH)/etc/media_codecs.xml:system/etc/media_codecs.xml \
