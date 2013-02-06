@@ -33,3 +33,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/usr/share/alsa/pcm/surround50.conf:system/usr/share/alsa/pcm/surround50.conf \
     $(LOCAL_PATH)/usr/share/alsa/pcm/surround51.conf:system/usr/share/alsa/pcm/surround51.conf \
     $(LOCAL_PATH)/usr/share/alsa/pcm/surround71.conf:system/usr/share/alsa/pcm/surround71.conf \
+    $(LOCAL_PATH)/vendor/firmware/fw_bcmdhd.bin:system/vendor/firmware/fw_bcmdhd.bin \
+    $(LOCAL_PATH)/vendor/firmware/fw_bcmdhd_abg.bin:system/vendor/firmware/fw_bcmdhd_abg.bin \
+    $(LOCAL_PATH)/vendor/firmware/fw_bcmdhd_apsta.bin:system/vendor/firmware/fw_bcmdhd_apsta.bin \
