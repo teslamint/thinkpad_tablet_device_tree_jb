@@ -41,3 +41,13 @@
 /dev/ion	0666	system	system
 /dev/timerinfo	0444	system	system
 /dev/rfkill     0660    wifi    wifi
+
+# compal indigo-sacdar 20110427 begin : for ericsson f5521gw
+/dev/ttyACM0                 0666   radio      radio
+/dev/ttyACM1                 0666   radio      radio
+/dev/ttyACM2                 0640   system     system
+
+/dev/bus/usb/002/049        0666   system     system
+/dev/bus/usb/002/050        0666   system     system
+# compal indigo-sacdar 20110427 end
+
