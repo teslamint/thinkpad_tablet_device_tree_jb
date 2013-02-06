@@ -50,6 +50,7 @@ WIFI_DRIVER_MODULE_NAME     := "bcm4329"
 WIFI_DRIVER_MODULE_ARG      := "iface_name=wlan0 firmware_path=/system/vendor/firmware/fw_bcm4329.bin nvram_path=/etc/nvram.txt"
 
 BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUEDROID_VENDOR_CONF := device/LENOVO/Indigo/bluetooth/vnd_Indigo.txt
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/LENOVO/Indigo/bluetooth
 
