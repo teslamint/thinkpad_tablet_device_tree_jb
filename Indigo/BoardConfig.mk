@@ -59,13 +59,13 @@ BOARD_HAS_SDCARD_INTERNAL := true
 
 USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/LENOVO/Indigo/proprietary/lib/egl/egl.cfg
+BOARD_USES_HGL := true
+BOARD_EGL_NEEDS_LEGACY_FB := true
 
 BOARD_DATA_DEVICE := /dev/block/mmcblk0p10
 BOARD_DATA_FILESYSTEM := ext4
 BOARD_CACHE_DEVICE := /dev/block/mmcblk0p4
 BOARD_CACHE_FILESYSTEM := ext4
-
-
 
 # fix this up by examining /proc/mtd on a running device
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
