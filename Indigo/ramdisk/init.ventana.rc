@@ -71,7 +71,6 @@ on fs
     chmod 775 /mnt/pia
     mount ext4 /dev/block/mmcblk0p9 /mnt/persdata wait noatime nosuid nodev journal_async_commit,data=writeback,nodelalloc,errors=panic
 # Compal Earvin 20110823 end
-
 setprop ro.crypto.fuse_sdcard true
 
 # Compal mini 20110524 begin
@@ -271,7 +270,7 @@ on boot
 # compal Indigo-Jason 20120322 for CTS android.permission.cts.FileSystemPermissionTest End
 
 service wpa_supplicant /system/bin/wpa_supplicant \
-     -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
+     -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
 
 #   we will start as root and wpa_supplicant will switch to user wifi
 #   after setting up the capabilities required for WEXT

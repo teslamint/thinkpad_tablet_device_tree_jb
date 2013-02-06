@@ -57,7 +57,8 @@ PRODUCT_PACKAGES := \
     libdbus-tools-common \
     lib_driver_cmd_bcmdhd \
     dbus-monitor \
-    dbus-send
+    dbus-send \
+    libnetcmdiface
 
 PRODUCT_CHARACTERISTICS := tablet
 
