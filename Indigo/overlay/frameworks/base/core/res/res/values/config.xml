@@ -21,8 +21,6 @@
      for different hardware and product builds. -->
 <resources>
     <string name="config_datause_iface">rmnet0</string>
-    <!-- Boolean indicating whether the wifi chipset has p2p support -->
-    <bool translatable="false" name="config_wifi_p2p_support">true</bool>
 
     <bool name="config_allowAllRotations">true</bool>
 
